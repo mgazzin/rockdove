@@ -22,14 +22,5 @@ END
 echo "Populating Table ADDRESS"
 mysql -p <<END
 use ROCKDB;
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
-insert into ADDRESS (name, surname, email) values ('Marco', 'Gazzin', 'm.gazzin@yahoo.it');
+insert into ADDRESS (name, surname, email) values ('John', 'Green', 'valid_user@domain.org');
 END
