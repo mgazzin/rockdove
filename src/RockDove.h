@@ -30,23 +30,7 @@
 #include <string>
 #include <iostream>
 
-/*
-class RockDoveLogger
-{
-public:
-	RockDoveLogger(Logger& c,Logger& f);
-	~RockDoveLogger();
-	void LogInformation(const std::string& msg);
-	void LogError(const std::string& msg);
-	void LogWarning(const std::string& msg);
-	
-private:
-	
-	Logger	 		mConsoleLogger;
-	Logger			mFileLogger;
-	
-};
-*/
+
 
 class RockDoveMailer
 {
@@ -59,7 +43,6 @@ public:
 					const std::string& SecurityEnabled,
 					const std::string& Subject, 
 					const std::string& Content);
-//					RockDoveLogger& log);
 	~RockDoveMailer();
 	int SendMail(const std::string mToAddress);
 	
@@ -72,7 +55,6 @@ private:
 	std::string mSecurityEnabled;
 	std::string mSubject;
 	std::string mContent;
-	//RockDoveLogger		mLog;
 
 };
 
@@ -80,7 +62,6 @@ private:
 class RockDove
 {
 public:
-	//RockDove(const std::string& db, RockDoveLogger& log);
 	RockDove(const std::string& db);
 	~RockDove();
 	int	DisplayRecords();
@@ -92,7 +73,6 @@ private:
 
 	std::string		rDB;
 	std::string	    rFileHTML;
-	//RockDoveLogger			mLog;
 	
 	
 
