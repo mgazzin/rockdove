@@ -365,9 +365,8 @@ int RockDoveMailer::SendMail(const std::string mToAddress)
 		message.setSender(mFromAddress);
 		message.addRecipient(MailRecipient(MailRecipient::PRIMARY_RECIPIENT, mToAddress));
 		message.setSubject(mSubject);
-		message.setContentType(contentType);
-		//message.setContent(mContent, MailMessage::ENCODING_8BIT);
-		message.setContent(mContent);
+		message.setContentType("multipart/alternative");
+		message.addContent(new StringPartSource(mContent,"text/html"),MailMessage::ENCODING_QUOTED_PRINTABLE);
 
 
 		// testing variable SecurityEnabled of rockdove.conf

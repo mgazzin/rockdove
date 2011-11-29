@@ -65,6 +65,7 @@ public:
 	RockDove(const std::string& db);
 	~RockDove();
 	int	DisplayRecords();
+	int ResetSentFlag();
 	int SendAllMails(RockDoveMailer& m);
 	void InitDB();
 	void ShutdownDB();
