@@ -135,7 +135,7 @@ public:
 };
 
 RockDove::RockDove(const std::string& db) :
-		rDB	(db)
+        rDB    (db)
 {
 }
 
@@ -146,173 +146,173 @@ RockDove::~RockDove()
 int RockDove::DisplayRecords()
 {
 
-	Logger::root().information("Initializating DB connection");
-	RockDove::InitDB();
-	
-	
-	return 0;
+    Logger::root().information("Initializating DB connection");
+    RockDove::InitDB();
+    
+    
+    return 0;
 
-	try
-	{
+    try
+    {
 
-		// Connection to DB
-		Logger::root().information("Connecting to DB");		
-		
-		const std::string conn_str = "user=root;password=marco;db=" + rDB + ";compress=false;auto-reconnect=true";	
-		Session sess("MySQL", conn_str);
-		
-		// Counting records
-		Logger::root().information("Select count from ADDRESS");
+        // Connection to DB
+        Logger::root().information("Connecting to DB");        
+        
+        const std::string conn_str = "user=root;password=marco;db=" + rDB + ";compress=false;auto-reconnect=true";    
+        Session sess("MySQL", conn_str);
+        
+        // Counting records
+        Logger::root().information("Select count from ADDRESS");
         int count = 0;
         sess << "select count(*) from ADDRESS", into(count), now;
 
-	    // Retreiving records
-		Logger::root().information("retreiving records");
-		std::vector<std::string> data, name, surname;
+        // Retreiving records
+        Logger::root().information("retreiving records");
+        std::vector<std::string> data, name, surname;
         sess << "select name, surname, email from ADDRESS", into(name), into(surname), into(data), now;
 
-		// Displaying records
-		Logger::root().information("Displaying records");
-		for(unsigned int i=0; i < data.size(); i++){
-			std::cout << "	email record #" << i+1 << "/" << count << ", " << name[i] << " " << surname[i] << " " << data[i] << std::endl;
-			Logger::root().information(Poco::format("email record #%u", i+1));
-		}
-		
-		Logger::root().information(Poco::format("%d records displyed", count-1));
+        // Displaying records
+        Logger::root().information("Displaying records");
+        for(unsigned int i=0; i < data.size(); i++){
+            std::cout << "    email record #" << i+1 << "/" << count << ", " << name[i] << " " << surname[i] << " " << data[i] << std::endl;
+            Logger::root().information(Poco::format("email record #%u", i+1));
+        }
+        
+        Logger::root().information(Poco::format("%d records displyed", count-1));
         std::cout << "\nRecords displayed." << std::endl;
-		
-		
-	}
-	
-	catch (Poco::Exception& exc)
-	{
-		Logger::root().error(Poco::format("Error found in executing display query: %s", exc.displayText()));
-		return -1;
-	}
-	
-	Logger::root().information("Closing DB");
-	RockDove::ShutdownDB();
-	
-	return 0;
+        
+        
+    }
+    
+    catch (Poco::Exception& exc)
+    {
+        Logger::root().error(Poco::format("Error found in executing display query: %s", exc.displayText()));
+        return -1;
+    }
+    
+    Logger::root().information("Closing DB");
+    RockDove::ShutdownDB();
+    
+    return 0;
 }
 
 int RockDove::ResetSentFlag()
 {
 
-	Logger::root().information("Initializating DB connection");
-	RockDove::InitDB();
-	
+    Logger::root().information("Initializating DB connection");
+    RockDove::InitDB();
+    
 
 
-	try
-	{
+    try
+    {
 
-		// Connection to DB
-		Logger::root().information("Connecting to DB");		
-		
-		const std::string conn_str = "user=root;password=marco;db=" + rDB + ";compress=false;auto-reconnect=true";	
-		Session sess("MySQL", conn_str);
-		
-		// Counting records
-		Logger::root().information("Updating 'last_sent' flag");
+        // Connection to DB
+        Logger::root().information("Connecting to DB");        
+        
+        const std::string conn_str = "user=root;password=marco;db=" + rDB + ";compress=false;auto-reconnect=true";    
+        Session sess("MySQL", conn_str);
+        
+        // Counting records
+        Logger::root().information("Updating 'last_sent' flag");
         sess << "update ADDRESS set last_sent=FALSE", now;
 
-		Logger::root().information("ADDRESS table updated.");
+        Logger::root().information("ADDRESS table updated.");
         std::cout << "ADDRESS table updated." << std::endl;
-		
-		
-	}
-	
-	catch (Poco::Exception& exc)
-	{
-		Logger::root().error(Poco::format("Error found in executing display query: %s", exc.displayText()));
-		return -1;
-	}
-	
-	Logger::root().information("Closing DB");
-	RockDove::ShutdownDB();
-	
-	return 0;
+        
+        
+    }
+    
+    catch (Poco::Exception& exc)
+    {
+        Logger::root().error(Poco::format("Error found in executing display query: %s", exc.displayText()));
+        return -1;
+    }
+    
+    Logger::root().information("Closing DB");
+    RockDove::ShutdownDB();
+    
+    return 0;
 }
 
 
 int RockDove::SendAllMails(RockDoveMailer& m)
 {
 
-	Logger::root().information("Initializating DB connection");
-	RockDove::InitDB();
-	float diff_secs;
-	Timestamp Now;
-	Timestamp::TimeDiff diff = Now.elapsed();
-	
+    Logger::root().information("Initializating DB connection");
+    RockDove::InitDB();
+    float diff_secs;
+    Timestamp Now;
+    Timestamp::TimeDiff diff = Now.elapsed();
+    
 
 
-	try
-	{
+    try
+    {
 
-		// Connection to DB
-		Logger::root().information("Connecting to DB");
-		
-		const std::string conn_str = "user=root;password=marco;db=" + rDB + ";compress=false;auto-reconnect=true";	
-		Session sess("MySQL", conn_str);
-		
-		// Counting records
-		Logger::root().information("Select count from ADDRESS");
+        // Connection to DB
+        Logger::root().information("Connecting to DB");
+        
+        const std::string conn_str = "user=root;password=marco;db=" + rDB + ";compress=false;auto-reconnect=true";    
+        Session sess("MySQL", conn_str);
+        
+        // Counting records
+        Logger::root().information("Select count from ADDRESS");
         int count = 0;
-		int max_rec = 0;
+        int max_rec = 0;
         sess << "select count(id) from ADDRESS where last_sent=FALSE", into(count), now;
-		Logger::root().information(Poco::format("count from ADDRESS = %d", count));
-		
-		if(count == 0) 
-		{
-			std::cout << "Nothing to send." << std::endl;
-			return -1;
-		}
-			
+        Logger::root().information(Poco::format("count from ADDRESS = %d", count));
+        
+        if(count == 0) 
+        {
+            std::cout << "Nothing to send." << std::endl;
+            return -1;
+        }
+            
 
-		// Retreiving records
-		Logger::root().information("retreiving records");		
-	    std::vector<std::string> data;
-		std::vector<Poco::UInt32> id;
+        // Retreiving records
+        Logger::root().information("retreiving records");        
+        std::vector<std::string> data;
+        std::vector<Poco::UInt32> id;
         sess << "select id, email from ADDRESS where last_sent=FALSE", into(id), into(data), now;
 
-		// Sending emails
-		Logger::root().information("Sending emails");
-		max_rec = count;
-		for(unsigned int i=0; i < data.size(); i++){
-			Now.update();
-			std::cout << "Sending email for record #" << i+1 << "/" << max_rec << " to address: " << data[i] << std::endl;
-			Logger::root().information(Poco::format("Sending email for record # %u", i+1));
-			try 
-			{
-				m.SendMail(data[i]);
-			}
-			catch (Poco::Exception& exc)
-			{
-				Logger::root().error(Poco::format("Error sending record # %d : %s", i+1, exc.displayText()));
-			}
-			Logger::root().information(Poco::format("Updating record %u in ADDRESS", id[i]));
-			sess << "update ADDRESS set last_sent = TRUE where id=" << id[i], now;
-			diff = Now.elapsed();
-			diff_secs = float(diff) / 1000000;
-			Logger::root().information(Poco::format("Time elapsed %5.2hf", diff_secs));
-			sess << "update ADDRESS set elapsed_time = ? where id = ?", use(diff_secs), use(id[i]), now;
-		}
+        // Sending emails
+        Logger::root().information("Sending emails");
+        max_rec = count;
+        for(unsigned int i=0; i < data.size(); i++){
+            Now.update();
+            std::cout << "Sending email for record #" << i+1 << "/" << max_rec << " to address: " << data[i] << std::endl;
+            Logger::root().information(Poco::format("Sending email for record # %u", i+1));
+            try 
+            {
+                m.SendMail(data[i]);
+            }
+            catch (Poco::Exception& exc)
+            {
+                Logger::root().error(Poco::format("Error sending record # %d : %s", i+1, exc.displayText()));
+            }
+            Logger::root().information(Poco::format("Updating record %u in ADDRESS", id[i]));
+            sess << "update ADDRESS set last_sent = TRUE where id=" << id[i], now;
+            diff = Now.elapsed();
+            diff_secs = float(diff) / 1000000;
+            Logger::root().information(Poco::format("Time elapsed %5.2hf", diff_secs));
+            sess << "update ADDRESS set elapsed_time = ? where id = ?", use(diff_secs), use(id[i]), now;
+        }
 
-		
-		
-	}
-	
-	catch (Poco::Exception& exc)
-	{
-		Logger::root().error(Poco::format("Error found in executing display query: %s", exc.displayText()));
-		return -1;
-	}
-	
-	Logger::root().information("Closing DB");
-	RockDove::ShutdownDB();
-	
-	return 0;
+        
+        
+    }
+    
+    catch (Poco::Exception& exc)
+    {
+        Logger::root().error(Poco::format("Error found in executing display query: %s", exc.displayText()));
+        return -1;
+    }
+    
+    Logger::root().information("Closing DB");
+    RockDove::ShutdownDB();
+    
+    return 0;
 }
 
 
@@ -330,21 +330,21 @@ void RockDove::ShutdownDB()
 
 
 RockDoveMailer::RockDoveMailer(const std::string& HostSMTP, 
-					Poco::UInt16 SMTPPort, 
-					const std::string& Username, 
-					const std::string& Password, 
-					const std::string& FromAddress, 
-					const std::string& SecurityEnabled,
-					const std::string& Subject, 
-					const std::string& Content) :
-					mHostSMTP(HostSMTP),
-					mSMTPPort(SMTPPort),
-					mUsername(Username),
-					mPassword(Password),
-					mFromAddress(FromAddress),
-					mSecurityEnabled(SecurityEnabled),
-					mSubject(Subject),
-					mContent(Content)
+                    Poco::UInt16 SMTPPort, 
+                    const std::string& Username, 
+                    const std::string& Password, 
+                    const std::string& FromAddress, 
+                    const std::string& SecurityEnabled,
+                    const std::string& Subject, 
+                    const std::string& Content) :
+                    mHostSMTP(HostSMTP),
+                    mSMTPPort(SMTPPort),
+                    mUsername(Username),
+                    mPassword(Password),
+                    mFromAddress(FromAddress),
+                    mSecurityEnabled(SecurityEnabled),
+                    mSubject(Subject),
+                    mContent(Content)
 {
 }
 
@@ -355,310 +355,310 @@ RockDoveMailer::~RockDoveMailer()
 
 int RockDoveMailer::SendMail(const std::string mToAddress)
 {
-		// Preparing message
-		Logger::root().information("Preparing message");
-		std::string charset = "utf-8";
-		std::string contentType = "text/plain; charset=\"utf-8\"";
-		mSubject = MailMessage::encodeWord(mSubject, charset);
-		
-		MailMessage message;
-		message.setSender(mFromAddress);
-		message.addRecipient(MailRecipient(MailRecipient::PRIMARY_RECIPIENT, mToAddress));
-		message.setSubject(mSubject);
-		message.setContentType("multipart/alternative");
-		message.addContent(new StringPartSource(mContent,"text/html"),MailMessage::ENCODING_QUOTED_PRINTABLE);
+        // Preparing message
+        Logger::root().information("Preparing message");
+        std::string charset = "utf-8";
+        std::string contentType = "text/plain; charset=\"utf-8\"";
+        mSubject = MailMessage::encodeWord(mSubject, charset);
+        
+        MailMessage message;
+        message.setSender(mFromAddress);
+        message.addRecipient(MailRecipient(MailRecipient::PRIMARY_RECIPIENT, mToAddress));
+        message.setSubject(mSubject);
+        message.setContentType("multipart/alternative");
+        message.addContent(new StringPartSource(mContent,"text/html"),MailMessage::ENCODING_QUOTED_PRINTABLE);
 
 
-		// testing variable SecurityEnabled of rockdove.conf
-		Logger::root().information("Testing variable SecutityEnabled of rockdove.conf");
-		if(mSecurityEnabled.compare("YES") != 0)
-		{
-		   try
-		   {
-				// Establish socket connection with NO security
-				Logger::root().information("Establish socket connection with NO security");
-				SMTPClientSession session(mHostSMTP, mSMTPPort);
-				session.login(SMTPClientSession::AUTH_LOGIN, mUsername, mPassword);
-				session.sendMessage(message);
-				session.close();
-				return 0;
-		   }
-		   catch (Poco::Exception& exc)
-		   {
-				Logger::root().error(Poco::format("Error sending email: %s", exc.displayText()));
-				return -1;
-		   }
+        // testing variable SecurityEnabled of rockdove.conf
+        Logger::root().information("Testing variable SecutityEnabled of rockdove.conf");
+        if(mSecurityEnabled.compare("YES") != 0)
+        {
+           try
+           {
+                // Establish socket connection with NO security
+                Logger::root().information("Establish socket connection with NO security");
+                SMTPClientSession session(mHostSMTP, mSMTPPort);
+                session.login(SMTPClientSession::AUTH_LOGIN, mUsername, mPassword);
+                session.sendMessage(message);
+                session.close();
+                return 0;
+           }
+           catch (Poco::Exception& exc)
+           {
+                Logger::root().error(Poco::format("Error sending email: %s", exc.displayText()));
+                return -1;
+           }
 
-		}
-		else
-		{
-			   try
-			   {
-					
-				
-					Logger::root().information("Initializing SSL");
-					SSLInitializer sslInitializer;
-					
-					// Note: we must create the passphrase handler prior Context 	
-					
-					Logger::root().information("Creating context");
-					SharedPtr<InvalidCertificateHandler> pCert = new ConsoleCertificateHandler(false); // ask the user via console
-					Context::Ptr pContext = new Context(Context::CLIENT_USE, "", "", "", Context::VERIFY_RELAXED, 9, true, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
-					SSLManager::instance().initializeClient(0, pCert, pContext);					
+        }
+        else
+        {
+               try
+               {
+                    
+                
+                    Logger::root().information("Initializing SSL");
+                    SSLInitializer sslInitializer;
+                    
+                    // Note: we must create the passphrase handler prior Context     
+                    
+                    Logger::root().information("Creating context");
+                    SharedPtr<InvalidCertificateHandler> pCert = new ConsoleCertificateHandler(false); // ask the user via console
+                    Context::Ptr pContext = new Context(Context::CLIENT_USE, "", "", "", Context::VERIFY_RELAXED, 9, true, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
+                    SSLManager::instance().initializeClient(0, pCert, pContext);                    
 
 
-					Logger::root().information("Establish socket connection with security");	
-					Poco::Net::SecureSMTPClientSession session(mHostSMTP, mSMTPPort);
-					session.login();
-					Logger::root().information("Starting TLS");
-					session.startTLS(pContext);
-					Logger::root().information("Logging in");
-					session.login(Poco::Net::SMTPClientSession::AUTH_LOGIN, mUsername, mPassword);
-					Logger::root().information("Sending message");
-					session.sendMessage(message);
-					session.close();
-					
+                    Logger::root().information("Establish socket connection with security");    
+                    Poco::Net::SecureSMTPClientSession session(mHostSMTP, mSMTPPort);
+                    session.login();
+                    Logger::root().information("Starting TLS");
+                    session.startTLS(pContext);
+                    Logger::root().information("Logging in");
+                    session.login(Poco::Net::SMTPClientSession::AUTH_LOGIN, mUsername, mPassword);
+                    Logger::root().information("Sending message");
+                    session.sendMessage(message);
+                    session.close();
+                    
 
-					
-					return 0;
-					
-			   }
-			   catch (Poco::Exception& exc)
-			   {
-					Logger::root().error(Poco::format("Error sending email (secure mode): %s", exc.displayText()));
-					return -1;
-			   }
-		}
+                    
+                    return 0;
+                    
+               }
+               catch (Poco::Exception& exc)
+               {
+                    Logger::root().error(Poco::format("Error sending email (secure mode): %s", exc.displayText()));
+                    return -1;
+               }
+        }
 }
-	
+    
 
 
 
 class RockDoveApp: public Application
 {
 public:
-	RockDoveApp(): 
-		_helpRequested(false),
-		_displayRequested(false),
-		HTMLFilename(""),
-		ConfFile ("")
-	{
-	}
+    RockDoveApp(): 
+        _helpRequested(false),
+        _displayRequested(false),
+        HTMLFilename(""),
+        ConfFile ("")
+    {
+    }
 
-protected:		
-	void defineOptions(OptionSet& options)
-	{
-		Application::defineOptions(options);
+protected:        
+    void defineOptions(OptionSet& options)
+    {
+        Application::defineOptions(options);
 
-		options.addOption(
-			Option("help", "h", "Display help information on command line arguments.")
-				.required(false)
-				.repeatable(false)
-				.callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleHelp)));
+        options.addOption(
+            Option("help", "h", "Display help information on command line arguments.")
+                .required(false)
+                .repeatable(false)
+                .callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleHelp)));
 
-		options.addOption(
-			Option("display", "v", "Display records in ADDRESS table.")
-				.required(false)
-				.repeatable(false)
-				.callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleDisplay)));
+        options.addOption(
+            Option("display", "v", "Display records in ADDRESS table.")
+                .required(false)
+                .repeatable(false)
+                .callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleDisplay)));
 
-		options.addOption(
-			Option("reset", "r", "Reset record status for sending.")
-				.required(false)
-				.repeatable(false)
-				.callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleReset)));			
-				
-		options.addOption(
-			Option("verbose", "V", "Verbose comment in log.")
-				.required(false)
-				.repeatable(false)
-				.callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleVerbose)));						
-				
-		options.addOption(
-			Option("inputHTML", "i", "HTML content file.")
-				.required(true)
-				.repeatable(false)
-				.argument("HTMLFilename")
-				.callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleInputHTML)));
+        options.addOption(
+            Option("reset", "r", "Reset record status for sending.")
+                .required(false)
+                .repeatable(false)
+                .callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleReset)));            
+                
+        options.addOption(
+            Option("verbose", "V", "Verbose comment in log.")
+                .required(false)
+                .repeatable(false)
+                .callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleVerbose)));                        
+                
+        options.addOption(
+            Option("inputHTML", "i", "HTML content file.")
+                .required(true)
+                .repeatable(false)
+                .argument("HTMLFilename")
+                .callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleInputHTML)));
 
-		options.addOption(
-			Option("confFile", "c", "SMTP configuration file.")
-				.required(true)
-				.repeatable(false)
-				.argument("ConfFile")
-				.callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleConfFile)));				
-				
-	}
-	
-	void handleHelp(const std::string& name, const std::string& value)
-	{
-		_helpRequested = true;
-		stopOptionsProcessing();
-	}
-	
-	void handleDisplay(const std::string& name, const std::string& value)
-	{
-		_displayRequested = true;	
-		stopOptionsProcessing();
-	}
+        options.addOption(
+            Option("confFile", "c", "SMTP configuration file.")
+                .required(true)
+                .repeatable(false)
+                .argument("ConfFile")
+                .callback(OptionCallback<RockDoveApp>(this, &RockDoveApp::handleConfFile)));                
+                
+    }
+    
+    void handleHelp(const std::string& name, const std::string& value)
+    {
+        _helpRequested = true;
+        stopOptionsProcessing();
+    }
+    
+    void handleDisplay(const std::string& name, const std::string& value)
+    {
+        _displayRequested = true;    
+        stopOptionsProcessing();
+    }
 
-	void handleInputHTML(const std::string& name, const std::string& value)
-	{
-		HTMLFilename = value;	
-	}
-	void handleVerbose(const std::string& name, const std::string& value)
-	{
-		_verboseRequested = true;	
-	}
+    void handleInputHTML(const std::string& name, const std::string& value)
+    {
+        HTMLFilename = value;    
+    }
+    void handleVerbose(const std::string& name, const std::string& value)
+    {
+        _verboseRequested = true;    
+    }
 
 
-	void handleConfFile(const std::string& name, const std::string& value)
-	{
-		ConfFile = value;	
-	}
-	void handleReset(const std::string& name, const std::string& value)
-	{
-		_resetRequested = true;	
-		stopOptionsProcessing();
-	}
+    void handleConfFile(const std::string& name, const std::string& value)
+    {
+        ConfFile = value;    
+    }
+    void handleReset(const std::string& name, const std::string& value)
+    {
+        _resetRequested = true;    
+        stopOptionsProcessing();
+    }
 
-	
-	void displayHelp()
-	{
-		HelpFormatter helpFormatter(options());
-		helpFormatter.setCommand(commandName());
-		helpFormatter.setUsage("[-v] -i:<HTMLFile> -c:<ConfFILE>");
-		helpFormatter.setHeader("RockDove v0.2. This is a mailer utility that take ah HTML file and send it to address in MySql ROCKDB database.");
-		helpFormatter.format(std::cout);
-	}
-	
-	int main(const std::vector<std::string>& args)
-	{
+    
+    void displayHelp()
+    {
+        HelpFormatter helpFormatter(options());
+        helpFormatter.setCommand(commandName());
+        helpFormatter.setUsage("[-v] -i:<HTMLFile> -c:<ConfFILE>");
+        helpFormatter.setHeader("RockDove v0.2. This is a mailer utility that take ah HTML file and send it to address in MySql ROCKDB database.");
+        helpFormatter.format(std::cout);
+    }
+    
+    int main(const std::vector<std::string>& args)
+    {
 
-		// preparing logging to file and console
+        // preparing logging to file and console
 
-		FormattingChannel* pFCConsole = new FormattingChannel(new PatternFormatter("[RockDove@%p]: %t"));
-		AutoPtr<ConsoleChannel> pCons(new ConsoleChannel);
-		pFCConsole->setChannel(pCons);
+        FormattingChannel* pFCConsole = new FormattingChannel(new PatternFormatter("[RockDove@%p]: %t"));
+        AutoPtr<ConsoleChannel> pCons(new ConsoleChannel);
+        pFCConsole->setChannel(pCons);
 
-		FormattingChannel* pFCFile = new FormattingChannel(new PatternFormatter("%Y-%m-%d %H:%M:%S.%c %N[%P]:RockDove@%p:%q:%t"));
-		AutoPtr<FileChannel> pFile(new FileChannel("rockdove.log"));
-		pFCFile->setChannel(pFile);
-		
-		
-		AutoPtr<SplitterChannel> pSplitter(new SplitterChannel);
-		pSplitter->addChannel(pFCConsole);
-		pSplitter->addChannel(pFCFile);
+        FormattingChannel* pFCFile = new FormattingChannel(new PatternFormatter("%Y-%m-%d %H:%M:%S.%c %N[%P]:RockDove@%p:%q:%t"));
+        AutoPtr<FileChannel> pFile(new FileChannel("rockdove.log"));
+        pFCFile->setChannel(pFile);
+        
+        
+        AutoPtr<SplitterChannel> pSplitter(new SplitterChannel);
+        pSplitter->addChannel(pFCConsole);
+        pSplitter->addChannel(pFCFile);
 
-		Logger::root().setChannel(pSplitter);
-		if(_verboseRequested) Logger::root().setLevel( Message::PRIO_INFORMATION);		
-		else Logger::root().setLevel( Message::PRIO_ERROR);
-		
-		Logger::root().information("Log started");		
+        Logger::root().setChannel(pSplitter);
+        if(_verboseRequested) Logger::root().setLevel( Message::PRIO_INFORMATION);        
+        else Logger::root().setLevel( Message::PRIO_ERROR);
+        
+        Logger::root().information("Log started");        
 
-	
-		//RockDoveLogger log(ConsoleLogger, FileLogger);
-		Logger::root().information("RockDove utility running...");
-		
-		// test if display (-v) is set
-		if(_displayRequested)
-		{
-			std::cout << "Displaying address records in ROCKDB\n" << std::endl;
-			Logger::root().information("Displaying address records in ROCKDB");
-			try 
-			{
-				Logger::root().information("Connecting to ROCKDB");
-				RockDove r("ROCKDB");
-				Logger::root().information("Running display of records");
-				r.DisplayRecords();
-				
-			}
-			catch (Poco::Exception& exc)
-			{
-				Logger::root().error("Error in fetching records.");
-			}
-			
-			return Application::EXIT_OK;
-		}
+    
+        //RockDoveLogger log(ConsoleLogger, FileLogger);
+        Logger::root().information("RockDove utility running...");
+        
+        // test if display (-v) is set
+        if(_displayRequested)
+        {
+            std::cout << "Displaying address records in ROCKDB\n" << std::endl;
+            Logger::root().information("Displaying address records in ROCKDB");
+            try 
+            {
+                Logger::root().information("Connecting to ROCKDB");
+                RockDove r("ROCKDB");
+                Logger::root().information("Running display of records");
+                r.DisplayRecords();
+                
+            }
+            catch (Poco::Exception& exc)
+            {
+                Logger::root().error("Error in fetching records.");
+            }
+            
+            return Application::EXIT_OK;
+        }
 
-		// test if display (-v) is set
-		if(_resetRequested)
-		{
-			std::cout << "resetting DB status for sending\n" << std::endl;
-			Logger::root().information("Updating 'last_sent' flag in DB");
-			try 
-			{
-				Logger::root().information("Connecting to ROCKDB");
-				RockDove r("ROCKDB");
-				Logger::root().information("Running update of records");
-				r.ResetSentFlag();
-				
-			}
-			catch (Poco::Exception& exc)
-			{
-				Logger::root().error("Error in fetching records.");
-			}
-			
-			return Application::EXIT_OK;
-		}
-		
-		
-		if(_helpRequested)
-		{
-			Logger::root().information("Displaying help");
-			displayHelp();		
-			return Application::EXIT_OK;
-		}
-		
-		// getting configuration
-		Logger::root().information(Poco::format("Getting configuration from file %s", ConfFile));
-		
-		AutoPtr<PropertyFileConfiguration> pConf;
-		pConf = new PropertyFileConfiguration(ConfFile);
-		std::string cHostname = pConf->getString("SMTPHostname");
-		int cPort = pConf->getInt("SMTPPort");
-		std::string cUsername = pConf->getString("Username");
-		std::string cPassword = pConf->getString("Password");
-		std::string cFromAddress = pConf->getString("FromAddress");
-		std::string cSecurityEnabled = pConf->getString("SecurityEnabled");
+        // test if display (-v) is set
+        if(_resetRequested)
+        {
+            std::cout << "resetting DB status for sending\n" << std::endl;
+            Logger::root().information("Updating 'last_sent' flag in DB");
+            try 
+            {
+                Logger::root().information("Connecting to ROCKDB");
+                RockDove r("ROCKDB");
+                Logger::root().information("Running update of records");
+                r.ResetSentFlag();
+                
+            }
+            catch (Poco::Exception& exc)
+            {
+                Logger::root().error("Error in fetching records.");
+            }
+            
+            return Application::EXIT_OK;
+        }
+        
+        
+        if(_helpRequested)
+        {
+            Logger::root().information("Displaying help");
+            displayHelp();        
+            return Application::EXIT_OK;
+        }
+        
+        // getting configuration
+        Logger::root().information(Poco::format("Getting configuration from file %s", ConfFile));
+        
+        AutoPtr<PropertyFileConfiguration> pConf;
+        pConf = new PropertyFileConfiguration(ConfFile);
+        std::string cHostname = pConf->getString("SMTPHostname");
+        int cPort = pConf->getInt("SMTPPort");
+        std::string cUsername = pConf->getString("Username");
+        std::string cPassword = pConf->getString("Password");
+        std::string cFromAddress = pConf->getString("FromAddress");
+        std::string cSecurityEnabled = pConf->getString("SecurityEnabled");
 
-		// reading content file
-		Logger::root().information(Poco::format("Reading content file %s", HTMLFilename));
-		Poco::FileInputStream inStream(HTMLFilename);
-		std::string content;
-		Poco::StreamCopier::copyToString(inStream, content);
+        // reading content file
+        Logger::root().information(Poco::format("Reading content file %s", HTMLFilename));
+        Poco::FileInputStream inStream(HTMLFilename);
+        std::string content;
+        Poco::StreamCopier::copyToString(inStream, content);
 
-		cout << "Configuration file read with the following definitions:" << endl;
-		std::cout << "SMTPHostname = " << cHostname << endl;
-		std::cout << "SMTPPort = " << cPort << endl;
-		std::cout << "Username = " << cUsername << endl;
-		std::cout << "Password = " << cPassword << endl;
-		std::cout << "FromAddress = " << cFromAddress << endl;
-		std::cout << "SecurityEnabled = " << cSecurityEnabled << endl;
-			
-		Logger::root().information("Configuration file read with the following definitions:");	
-		Logger::root().information(Poco::format("\t\tSMTPHostname = %s", cHostname));
-		Logger::root().information(Poco::format("\t\tSMTPPort = %d", cPort));
-		Logger::root().information(Poco::format("\t\tUsername = %s", cUsername));
-		Logger::root().information(Poco::format("\t\tPassword = %s", cPassword));
-		Logger::root().information(Poco::format("\t\tFromAddress = %s", cFromAddress));
-		Logger::root().information(Poco::format("\t\tSecurityEnabled = %s", cSecurityEnabled));
-			
-		//std::cout << content;
-		RockDoveMailer m(cHostname, cPort, cUsername, cPassword, cFromAddress, cSecurityEnabled, "Test RockDove", content);
-		RockDove r("ROCKDB");
-		r.SendAllMails(m);
+        cout << "Configuration file read with the following definitions:" << endl;
+        std::cout << "SMTPHostname = " << cHostname << endl;
+        std::cout << "SMTPPort = " << cPort << endl;
+        std::cout << "Username = " << cUsername << endl;
+        std::cout << "Password = " << cPassword << endl;
+        std::cout << "FromAddress = " << cFromAddress << endl;
+        std::cout << "SecurityEnabled = " << cSecurityEnabled << endl;
+            
+        Logger::root().information("Configuration file read with the following definitions:");    
+        Logger::root().information(Poco::format("\t\tSMTPHostname = %s", cHostname));
+        Logger::root().information(Poco::format("\t\tSMTPPort = %d", cPort));
+        Logger::root().information(Poco::format("\t\tUsername = %s", cUsername));
+        Logger::root().information(Poco::format("\t\tPassword = %s", cPassword));
+        Logger::root().information(Poco::format("\t\tFromAddress = %s", cFromAddress));
+        Logger::root().information(Poco::format("\t\tSecurityEnabled = %s", cSecurityEnabled));
+            
+        //std::cout << content;
+        RockDoveMailer m(cHostname, cPort, cUsername, cPassword, cFromAddress, cSecurityEnabled, "Test RockDove", content);
+        RockDove r("ROCKDB");
+        r.SendAllMails(m);
 
-		return Application::EXIT_OK;
-	}
-		
+        return Application::EXIT_OK;
+    }
+        
 private:
-	bool _helpRequested;
-	bool _displayRequested;
-	bool _resetRequested;
-	bool _verboseRequested;
-	std::string HTMLFilename;
-	std::string ConfFile;
+    bool _helpRequested;
+    bool _displayRequested;
+    bool _resetRequested;
+    bool _verboseRequested;
+    std::string HTMLFilename;
+    std::string ConfFile;
 };
 
 

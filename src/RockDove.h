@@ -36,25 +36,25 @@ class RockDoveMailer
 {
 public: 
     RockDoveMailer(const std::string& HostSMTP, 
-					Poco::UInt16 SMTPPort, 
-					const std::string& Username, 
-					const std::string& Password, 
-					const std::string& FromAddress, 
-					const std::string& SecurityEnabled,
-					const std::string& Subject, 
-					const std::string& Content);
-	~RockDoveMailer();
-	int SendMail(const std::string mToAddress);
-	
+                    Poco::UInt16 SMTPPort, 
+                    const std::string& Username, 
+                    const std::string& Password, 
+                    const std::string& FromAddress, 
+                    const std::string& SecurityEnabled,
+                    const std::string& Subject, 
+                    const std::string& Content);
+    ~RockDoveMailer();
+    int SendMail(const std::string mToAddress);
+    
 private:
-	std::string mHostSMTP;
-	Poco::UInt16 mSMTPPort;
-	std::string mUsername;
-	std::string mPassword;
-	std::string mFromAddress;
-	std::string mSecurityEnabled;
-	std::string mSubject;
-	std::string mContent;
+    std::string mHostSMTP;
+    Poco::UInt16 mSMTPPort;
+    std::string mUsername;
+    std::string mPassword;
+    std::string mFromAddress;
+    std::string mSecurityEnabled;
+    std::string mSubject;
+    std::string mContent;
 
 };
 
@@ -62,20 +62,20 @@ private:
 class RockDove
 {
 public:
-	RockDove(const std::string& db);
-	~RockDove();
-	int	DisplayRecords();
-	int ResetSentFlag();
-	int SendAllMails(RockDoveMailer& m);
-	void InitDB();
-	void ShutdownDB();
-		
+    RockDove(const std::string& db);
+    ~RockDove();
+    int    DisplayRecords();
+    int ResetSentFlag();
+    int SendAllMails(RockDoveMailer& m);
+    void InitDB();
+    void ShutdownDB();
+        
 private:
 
-	std::string		rDB;
-	std::string	    rFileHTML;
-	
-	
+    std::string        rDB;
+    std::string        rFileHTML;
+    
+    
 
 };
 
@@ -85,4 +85,4 @@ private:
 
 
 
-#endif	// ROCK_DOVE_H
+#endif    // ROCK_DOVE_H
