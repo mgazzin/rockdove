@@ -1,15 +1,19 @@
+*Rockdove
+
 RockDove is a small mailing utility that allows to send massive emails. 
+
 RockDove takes email addresses stored in MySql ROCKDB in the table ADDRESS and deliver an HTML file to all the addressed.
+
 More enanchements will include the following topics:
 
-Threads management
-Windows version and test
+* Threads management
+* Windows version and test
 
 This project is developed in C++ with POCO libraries (http://pocoproject.org/). --- AUTHOR: Marco Gazzin ---
 
 Command syntax:
 
-
+```
 #rockdove [-vh] -i:HTMLFilename -c:ConfFile
 where:
 -v displays all the records to be processed
@@ -24,3 +28,4 @@ SMTPPort = 587
 Username = valid_user@gmail.com
 Password = password
 FromAddress = valid_user@gmail.com
+```
