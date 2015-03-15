@@ -1,4 +1,4 @@
-*Rockdove
+#Rockdove
 
 RockDove is a small mailing utility that allows to send massive emails. 
 
